@@ -1,9 +1,12 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+'use client';
+
+import SignIn from "@/components/SignIn";
+
 
 export default function Home() {
   return (
-    <>
-    </>
+    
+      <SignIn />
+   
   );
 }
