@@ -4,8 +4,6 @@ import {
   Button,
   CssBaseline,
   TextField,
-  FormControlLabel,
-  Checkbox,
   Link,
   Grid,
   Box,
@@ -15,9 +13,8 @@ import {
   ThemeProvider,
 } from "@mui/material";
 import * as Yup from "yup";
-import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useFormik } from "formik";
+import { Formik, Form } from "formik";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store";
@@ -26,42 +23,28 @@ import { Login } from "@/store/loginSlice";
 const defaultTheme = createTheme();
 
 export default function SignIn() {
-
   const dispatch = useDispatch<AppDispatch>();
-  const { loginDetail, loading, error } = useSelector(
-    (state: RootState) => state.login
-  );
- 
+  const { loginDetail, error } = useSelector((state: RootState) => state.login);
+
   const router = useRouter();
 
   const SignInSchema = Yup.object({
     userName: Yup.string()
-      .min(2, "Must be at least ")
+      .min(2, "Must be at least 2 characters")
       .required("Please enter your email"),
     password: Yup.string()
       .min(6, "Must be at least 6 characters")
       .required("Please enter your password"),
   });
 
-  const formik = useFormik({
-    initialValues: {
-      userName: "",
-      password: "",
-    },
-    validationSchema: SignInSchema,
-    onSubmit: (values) => {
-      dispatch(Login({ username: values.userName, password: values.password }));
-      formik.resetForm();
-    },
-  });
-  
+  if (loginDetail && loginDetail.token) {
+    localStorage.setItem("token", loginDetail.token);
+    router.push("/HomePage");
+  }
 
-  // useEffect(() => {
-     if (loginDetail && loginDetail.token) {
-      localStorage.setItem("token", loginDetail.token);
-      router.push("/HomePage");
-    }
-  // }, [loginDetail, router]);
+  if (error) {
+    alert("Incorrect username or password");
+  }
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -81,65 +64,69 @@ export default function SignIn() {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <Box
-            component="form"
-            onSubmit={formik.handleSubmit}
-            noValidate
-            sx={{ mt: 1 }}
+          <Formik
+            initialValues={{ userName: "", password: "" }}
+            validationSchema={SignInSchema}
+            onSubmit={(values, { resetForm }) => {
+              dispatch(
+                Login({ username: values.userName, password: values.password })
+              );
+              resetForm();
+            }}
           >
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="userName"
-              label="User Name"
-              name="userName"
-              value={formik.values.userName}
-              onChange={formik.handleChange}
-              error={formik.touched.userName && Boolean(formik.errors.userName)}
-              helperText={formik.touched.userName && formik.errors.userName}
-              autoComplete="email"
-              autoFocus
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              value={formik.values.password}
-              onChange={formik.handleChange}
-              error={formik.touched.password && Boolean(formik.errors.password)}
-              helperText={formik.touched.password && formik.errors.password}
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Sign In
-            </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
-              <Grid item>
-                <Link href="#" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
-            </Grid>
-          </Box>
+            {({ handleSubmit, handleChange, values, errors, touched }) => (
+              <Form onSubmit={handleSubmit}>
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="userName"
+                  label="User Name"
+                  name="userName"
+                  value={values.userName}
+                  onChange={handleChange}
+                  error={touched.userName && Boolean(errors.userName)}
+                  helperText={touched.userName && errors.userName}
+                  autoComplete="email"
+                  autoFocus
+                />
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  value={values.password}
+                  onChange={handleChange}
+                  error={touched.password && Boolean(errors.password)}
+                  helperText={touched.password && errors.password}
+                  autoComplete="current-password"
+                />
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                >
+                  Sign In
+                </Button>
+                <Grid container>
+                  <Grid item xs>
+                    <Link href="#" variant="body2">
+                      Forgot password?
+                    </Link>
+                  </Grid>
+                  <Grid item>
+                    <Link href="#" variant="body2">
+                      Don't have an account? Sign Up
+                    </Link>
+                  </Grid>
+                </Grid>
+              </Form>
+            )}
+          </Formik>
         </Box>
       </Container>
     </ThemeProvider>
