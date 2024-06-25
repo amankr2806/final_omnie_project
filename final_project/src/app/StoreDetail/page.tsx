@@ -6,13 +6,7 @@ import StoreTable from "@/components/StoreTable";
 // ];
 
 const StoreDetail: React.FC = () => {
-  return (
-    
-    <div className="wrapper">
-      <StoreHeader />
-      <StoreTable />
-    </div>
-  );
+  return <StoreTable />;
 };
 
 export default StoreDetail;
