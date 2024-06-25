@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import loginSlice, { logout } from "./loginSlice";
+import storeCountSlice from "./storeCountSlice";
 
 const Store = configureStore({
   reducer: {
     login: loginSlice.reducer,
+    storeCount: storeCountSlice.reducer,
   },
 });
 

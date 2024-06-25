@@ -1,31 +1,17 @@
-"use client";
+import FillerContent from "@/components/FillerContent";
+import StoreContent from "@/components/StoreContent";
 
-import { logout } from "@/store";
-import { useRouter } from "next/navigation";
-import { useDispatch } from "react-redux";
-
-const Home = () => {
-  const dispatch = useDispatch();
-  const router = useRouter();
-
-  const token = localStorage.getItem("token");
-
-  if (!token) {
-    router.push("/");
-  }
-
-  const handleLogOut = () => {
-    dispatch(logout());
-    localStorage.removeItem("token");
-    router.push("/");
-  };
-
+const HomePage = () => {
   return (
-    <>
-      <p>Heloo</p>
-      <button onClick={handleLogOut}>Log Out</button>
-    </>
+    <div className="wrapper">
+      <FillerContent />
+      <FillerContent />
+      <StoreContent />
+      <FillerContent />
+      <FillerContent />
+      <FillerContent />
+    </div>
   );
 };
 
-export default Home;
+export default HomePage;

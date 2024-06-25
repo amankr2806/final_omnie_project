@@ -33,7 +33,7 @@ export const Login = createAsyncThunk("Login", async (user: User) => {
     );
     return response.data.data[0];
   } catch (error) {
-    throw new Error("Error logging in");
+   console.log(error);
   }
 });
 

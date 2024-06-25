@@ -15,6 +15,7 @@ import {
 import * as Yup from "yup";
 import { useRouter } from "next/navigation";
 import { Formik, Form } from "formik";
+import { useEffect } from "react";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store";
@@ -37,14 +38,18 @@ export default function SignIn() {
       .required("Please enter your password"),
   });
 
-  if (loginDetail && loginDetail.token) {
-    localStorage.setItem("token", loginDetail.token);
-    router.push("/HomePage");
-  }
+  useEffect(() => {
+    if (loginDetail && loginDetail.token) {
+      localStorage.setItem("token", loginDetail.token);
+      router.push("/HomePage");
+    }
+  }, [loginDetail]);
 
-  if (error) {
-    alert("Incorrect username or password");
-  }
+  useEffect(() => {
+    if (error) {
+      window.alert("Incorrect username or password");
+    }
+  }, [error]);
 
   return (
     <ThemeProvider theme={defaultTheme}>
