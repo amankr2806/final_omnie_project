@@ -12,7 +12,6 @@ export const getStoreCount = createAsyncThunk("getStoreCount", async () => {
         },
       }
     );
-    console.log(response.data);
     return response.data.data[0];
   } catch (error) {
     console.log(error);

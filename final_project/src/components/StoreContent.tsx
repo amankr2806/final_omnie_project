@@ -14,17 +14,24 @@ import PersonIcon from "@mui/icons-material/Person";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState, AppDispatch } from "@/store";
 import { getStoreCount } from "@/store/storeCountSlice";
+import { useRouter } from "next/navigation";
 
 const StoreContent = () => {
   const { storeCount, error } = useSelector(
     (state: RootState) => state.storeCount
   );
 
+  const router = useRouter();
+
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
     dispatch(getStoreCount());
   }, [dispatch]);
+
+  const handleView = () => {
+    router.push("/StoreDetail");
+  }
 
   if (error) {
     return <Alert severity="error">{error}</Alert>;
@@ -77,7 +84,7 @@ const StoreContent = () => {
         </IconButton>
       </CardContent>
       <CardActions>
-        <Button size="small" variant="contained" color="primary">
+        <Button onClick={handleView} size="small" variant="contained" color="primary" >
           View
         </Button>
       </CardActions>
