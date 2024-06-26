@@ -26,12 +26,12 @@ const StoreContent = () => {
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
-    dispatch(getStoreCount());
-  }, [dispatch]);
+    if (!storeCount) dispatch(getStoreCount());
+  }, []);
 
   const handleView = () => {
     router.push("/StoreDetail");
-  }
+  };
 
   if (error) {
     return <Alert severity="error">{error}</Alert>;
@@ -84,7 +84,12 @@ const StoreContent = () => {
         </IconButton>
       </CardContent>
       <CardActions>
-        <Button onClick={handleView} size="small" variant="contained" color="primary" >
+        <Button
+          onClick={handleView}
+          size="small"
+          variant="contained"
+          color="primary"
+        >
           View
         </Button>
       </CardActions>

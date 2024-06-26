@@ -17,11 +17,13 @@ import { useEffect, useState } from "react";
 import { RootState, AppDispatch } from "@/store";
 import { getStoreList } from "@/store/storeListSlice";
 import StoreHeader from "./StoreHeader";
+import { deleteStoreList } from "@/store/deleteStoreItem";
 
 
 const StoreTable: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { storeList, loading, error } = useSelector((state: RootState) => state.storeList);
+  // const { storeListID } = useSelector((state: RootState) => state.deleteStoreList);
   const [filteredRows, setFilteredRows] = useState<any[] | null>(null);
 
   useEffect(() => {
@@ -31,6 +33,12 @@ const StoreTable: React.FC = () => {
   useEffect(() => {
     setFilteredRows(storeList);
   }, [storeList]);
+
+  // useEffect(() => {
+  //   if (storeListID) {
+  //     setFilteredRows((prevRows) => prevRows?.filter((row) => row.id !== storeListID) ?? null);
+  //   }
+  // }, [storeListID]);
 
   const handleSearch = (term: string) => {
     if (term.trim() === "") {
@@ -46,6 +54,10 @@ const StoreTable: React.FC = () => {
   const handleReset = () => {
     setFilteredRows(storeList);
   };
+
+  // const handleDelete = (id:number) => {
+  //   dispatch(deleteStoreList(id))
+  // }
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
@@ -87,7 +99,7 @@ const StoreTable: React.FC = () => {
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
                   <TableCell align="center">{store.partner}</TableCell>
-                  <TableCell align="center">{store.city}</TableCell>
+                  <TableCell align="center">{store.name}</TableCell>
                   <TableCell align="center">{store.contactPerson}</TableCell>
                   <TableCell align="center">{store.agentCount}</TableCell>
                   <TableCell align="center">
@@ -100,7 +112,7 @@ const StoreTable: React.FC = () => {
                     <Button variant="contained" color="primary" sx={{ mr: 1 }}>
                       <VisibilityIcon />
                     </Button>
-                    <Button variant="contained" color="secondary">
+                    <Button variant="contained" color="error">
                       <DeleteIcon />
                     </Button>
                   </TableCell>
@@ -121,3 +133,6 @@ const StoreTable: React.FC = () => {
 };
 
 export default StoreTable;
+
+
+// onClick={() => handleDelete(store.id)}

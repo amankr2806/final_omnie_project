@@ -1,4 +1,5 @@
 import { useState } from "react";
+import AddDrawer from "./AddDrawer";
 
 interface StoreHeaderProps {
   onSearch: (searchTerm: string) => void;
@@ -22,9 +23,13 @@ const StoreHeader: React.FC<StoreHeaderProps> = ({ onSearch, onReset }) => {
     setSearchTerm("");
   };
 
+  // const handleAdd = () => {
+  //   <AddDrawer />
+  // }
   return (
     <div className="wrapper">
-      <button className="button">Add Data</button>
+      {/* <button className="button"  >Add Data</button> */}
+      <AddDrawer />
       <div>
         <input
           type="text"
