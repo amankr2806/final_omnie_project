@@ -30,7 +30,9 @@ const StoreTable: React.FC = () => {
 
   useEffect(() => {
     dispatch(getStoreList());
-  }, []);<center></center>
+  }, []);
+
+  
   useEffect(() => {
     setFilteredRows(storeList);
   }, [storeList]);

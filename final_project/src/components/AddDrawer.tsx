@@ -109,14 +109,6 @@ const AddDrawer: React.FC = () => {
   const toggleDrawer =
     (anchor: "right", open: boolean) =>
     (event: React.KeyboardEvent | React.MouseEvent) => {
-      if (
-        event.type === "keydown" &&
-        ((event as React.KeyboardEvent).key === "Tab" ||
-          (event as React.KeyboardEvent).key === "Shift")
-      ) {
-        return;
-      }
-
       setState({ ...state, [anchor]: open });
     };
 
@@ -126,7 +118,11 @@ const AddDrawer: React.FC = () => {
 
   return (
     <div>
-      <Button onClick={toggleDrawer("right", true)} variant="contained" color="primary">
+      <Button
+        onClick={toggleDrawer("right", true)}
+        variant="contained"
+        color="primary"
+      >
         Add Store
       </Button>
       <Drawer
@@ -320,24 +316,17 @@ const AddDrawer: React.FC = () => {
                     variant="contained"
                     color="secondary"
                     onClick={handleCloseDrawer("right")}
->
-Cancel
-</Button>
-</Box>
-</Form>
-)}
-</Formik>
-</Box>
-</Drawer>
-</div>
-);
+                  >
+                    Cancel
+                  </Button>
+                </Box>
+              </Form>
+            )}
+          </Formik>
+        </Box>
+      </Drawer>
+    </div>
+  );
 };
 
 export default AddDrawer;
-
-
-
-
-
-
-

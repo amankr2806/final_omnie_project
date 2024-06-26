@@ -12,7 +12,6 @@ export const deleteStoreList = createAsyncThunk("deleteStoreList", async (id:num
         "Content-Type": "application/json",
       },
     });
-    console.log(response.data.data);
     return response.data.data;
   } catch (error) {
     console.log(error);

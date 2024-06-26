@@ -1,3 +1,4 @@
+"use client";
 import * as React from "react";
 import {
   Avatar,
@@ -38,18 +39,10 @@ export default function SignIn() {
       .required("Please enter your password"),
   });
 
-  useEffect(() => {
-    if (loginDetail && loginDetail.token) {
-      localStorage.setItem("token", loginDetail.token);
-      router.push("/HomePage");
-    }
-  }, [loginDetail]);
-
-  useEffect(() => {
-    if (error) {
-      window.alert("Incorrect username or password");
-    }
-  }, [error]);
+  if (loginDetail && loginDetail.token) {
+    localStorage.setItem("token", loginDetail.token);
+    router.push("/HomePage");
+  }
 
   return (
     <ThemeProvider theme={defaultTheme}>

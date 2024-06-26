@@ -8,7 +8,6 @@ import {
   Typography,
   Box,
   IconButton,
-  Alert,
 } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
 import { useDispatch, useSelector } from "react-redux";
@@ -26,15 +25,15 @@ const StoreContent = () => {
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
-    if (!storeCount) dispatch(getStoreCount());
-  }, []);
+    dispatch(getStoreCount());
+  }, [storeCount]);
 
   const handleView = () => {
     router.push("/StoreDetail");
   };
 
   if (error) {
-    return <Alert severity="error">{error}</Alert>;
+    console.log(error);
   }
 
   if (!storeCount) {

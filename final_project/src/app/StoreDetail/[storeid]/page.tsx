@@ -17,10 +17,7 @@ const StoreItem: React.FC<pageProps> = ({ params }) => {
   const handleRoute = () => {
     router.push("/StoreDetail");
   };
-  if (!storeDetail) {
-    return <div>Loading store details...</div>;
-  }
-
+ 
   return (
     <div className="wrapper1">
     <button className="button" onClick={handleRoute}>
