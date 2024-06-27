@@ -14,7 +14,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <title>Counter</title>
+        <title>Final Project</title>
       </head>
       <body className={inter.className}>
         <Provider store={Store}>{children}</Provider>
